@@ -14,6 +14,8 @@ public sealed class GameEngine
     private static GameEngine? _instance;
     private IGameObjectFactory gameObjectFactory;
 
+    private List<NPC> npcs;
+
     public static GameEngine Instance {
         get{
             if(_instance == null)
@@ -27,6 +29,7 @@ public sealed class GameEngine
     private GameEngine() {
         //INIT PROPS HERE IF NEEDED
         gameObjectFactory = new GameObjectFactory();
+        npcs = new List<NPC>();
     }
 
     private GameObject? _focusedObject;
@@ -35,6 +38,15 @@ public sealed class GameEngine
 
     private List<GameObject> gameObjects = new List<GameObject>();
 
+    public void SetNPCs(List<NPC> npcList)
+    {
+        npcs = npcList;
+    }
+
+    public List<NPC> GetNPCs()
+    {
+        return npcs;
+    }
 
     public Map GetMap() {
         return map;
@@ -119,6 +131,13 @@ public sealed class GameEngine
             }
             Console.WriteLine();
         }
+
+        foreach (var npc in npcs)
+        {
+            Console.SetCursorPosition(npc.PosX, npc.PosY);
+            Console.ForegroundColor = npc.Color;
+            Console.Write(npc.CharRepresentation);
+        }
     }
     
     // Method to create GameObject using the factory from clients
@@ -177,6 +196,16 @@ public sealed class GameEngine
         gameObjects.ForEach(delegate(GameObject obj)
         {
             if (obj.Type == GameObjectType.Player)
+            {
+                map.Set(ref obj);
+                return;
+            }
+        });
+
+        // RENDER THE NPCs
+        gameObjects.ForEach(delegate(GameObject obj)
+        {
+            if (obj.Type == GameObjectType.NPC)
             {
                 map.Set(ref obj);
                 return;

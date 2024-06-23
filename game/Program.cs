@@ -12,6 +12,9 @@ class Program
         Console.CursorVisible = false;
         var engine = GameEngine.Instance;
         var inputHandler = InputHandler.Instance;
+
+        var npcs = InitializeNPCs();
+        engine.SetNPCs(npcs);
         
         engine.Setup(currLevel);
         currLevel = engine.GetCurrentLevel();
@@ -37,7 +40,36 @@ class Program
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             inputHandler.Handle(keyInfo);
             engine.Update();
+
+            // Check for NPC interaction
+            CheckForNPCInteraction();
+
+            engine.Update();
         }
+    }
+
+    static private void CheckForNPCInteraction()
+    {
+        var player = Player.Instance;
+        foreach (var npc in GameEngine.Instance.GetNPCs())
+        {
+            player.InteractWithNPC(npc);
+        }
+    }
+
+    static private List<NPC> InitializeNPCs()
+    {
+        // Example NPC dialog setup
+        DialogNode node1 = new DialogNode("Hello, welcome to Sokoban!");
+
+        node1.AddResponse("Hello!", new DialogNode("What brings you here today?", new List<Response> {
+            new Response("I want to save the game", new DialogNode("I'll get right on that!")),
+            new Response("Just passing through.", new DialogNode("Okay, have fun!"))
+    }));
+
+        NPC npc = new NPC(1, 1, node1); // Example position (5, 5)
+
+        return new List<NPC> { npc };
     }
 
     static private void nextLevel(GameEngine engine) {

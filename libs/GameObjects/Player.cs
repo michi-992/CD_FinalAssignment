@@ -54,4 +54,23 @@ public sealed class Player : GameObject {
             }
         }
     }
+
+    public void InteractWithNPC(NPC npc)
+    {
+        if (IsNextToNPC(npc))
+        {
+            Console.WriteLine($"Press 'T' to talk to {npc.CharRepresentation}.");
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            if (keyInfo.Key == ConsoleKey.T)
+            {
+                npc.Dialog.Start();
+            }
+        }
+    }
+
+    private bool IsNextToNPC(NPC npc)
+    {
+        return (Math.Abs(this.PosX - npc.PosX) == 1 && this.PosY == npc.PosY) ||
+               (Math.Abs(this.PosY - npc.PosY) == 1 && this.PosX == npc.PosX);
+    }
 }
