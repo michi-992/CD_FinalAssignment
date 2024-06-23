@@ -25,8 +25,7 @@ namespace libs
             {
                 Responses = new List<Response>
                 {
-                    new Response("Continue to the game", null), // Replace with actual game start action
-                    new Response("Read the introduction again", _startingNode)
+                    new Response("Continue to the game", null)
                 }
             };
         }
@@ -47,9 +46,8 @@ namespace libs
             tutorialStartNode.AddResponse("Next", secondNode);
             secondNode.AddResponse("Next", thirdNode);
             thirdNode.AddResponse("Next", fourthNode);
-            fourthNode.AddResponse("Next", _endNode); // End of tutorial
-
-            // Responses for the end node handled in the constructor
+            fourthNode.AddResponse("Continue to game", _endNode);
+            fourthNode.AddResponse("Restart Tutorial", tutorialStartNode);
         }
 
         public void StartTutorial()
