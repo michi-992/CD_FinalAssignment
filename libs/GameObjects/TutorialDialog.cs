@@ -36,7 +36,8 @@ namespace libs
             tutorialStartNode = new DialogNode("Welcome to the Sokoban tutorial!\n\n" +
                                                "In Sokoban, your goal is to push all the boxes onto the targets.");
 
-            DialogNode secondNode = new DialogNode("You control the player character using arrow keys or WASD.");
+            DialogNode secondNode = new DialogNode("You control the player character using arrow keys." +
+                                                "Use Z to undo a move, R to reset the game, S to save and L to load.");
 
             DialogNode thirdNode = new DialogNode("You can only push one box at a time. " +
                                                   "Boxes can be pushed horizontally or vertically, but not diagonally.");

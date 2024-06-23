@@ -284,7 +284,7 @@ public sealed class GameEngine
 
     public void saveGame() {
         List<GameObject> gameObjects = new List<GameObject>();
-        // iterats over all gameobjects in last item of map.history and adds them to the list if not Floor
+        // iterates over all gameobjects in last item of map.history and adds them to the list if not Floor
         for (int i = 0; i < map.MapWidth; i++) {
             for (int j = 0; j < map.MapHeight; j++) {
                 if(map.history.Last()[j,i].Type != GameObjectType.Floor) gameObjects.Add(map.history.Last()[j,i]);
@@ -295,6 +295,46 @@ public sealed class GameEngine
         var gameState = new GameState { currentLevel = currentGameLevel, gameObjects =  gameObjects };
         string output = JsonConvert.SerializeObject(gameState);
         File.WriteAllText("../SavedFile.json", output);
+    }
+
+    public void loadGame()
+    {
+        try
+        {
+            // Read JSON content from SavedFile.json
+            string jsonContent = File.ReadAllText("../SavedFile.json");
+
+            // Deserialize JSON into GameState object
+            GameState gameState = JsonConvert.DeserializeObject<GameState>(jsonContent);
+
+            // Clear current game state
+            gameObjects.Clear();
+
+            // Set current level
+            if (gameState.currentLevel.HasValue)
+            {
+                SetCurrentLevel(gameState.currentLevel.Value);
+            }
+            else
+            {
+                Console.WriteLine("Warning: Saved game state does not contain a valid current level.");
+                // You might want to handle this case depending on your game logic
+            }
+
+            // Load game objects
+            foreach (var gameObjectData in gameState.gameObjects)
+            {
+                // Create each game object and add to game state
+                GameObject gameObject = CreateGameObject(gameObjectData);
+                AddGameObject(gameObject);
+            }
+
+            Console.WriteLine("Successfully loaded the saved game state.");
+            }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading saved game: {ex.Message}");
+        }
     }
 
 

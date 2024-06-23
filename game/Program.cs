@@ -67,16 +67,17 @@ class Program
     }
 
     static private List<NPC> InitializeNPCs()
-    {
-        // Example NPC dialog setup
+    {    
         DialogNode node1 = new DialogNode("Hello, welcome to Sokoban!");
 
         node1.AddResponse("Hello!", new DialogNode("What brings you here today?", new List<Response> {
-        new Response("I want to save the game", new DialogNode("I'll get right on that!")),
-        new Response("Just passing through.", new DialogNode("Okay, have fun!"))
-    }));
+            new Response("I want to save the game", new DialogNode("I'll get right on that!"), () => GameEngine.Instance.saveGame()),
+            new Response("I want to reset the game", new DialogNode("Sure thing!"), () => GameEngine.Instance.restartGame()),
+            new Response("I want to undo the last action", new DialogNode("Alright!"), () => GameEngine.Instance.revertHistory()),
+            new Response("I want to load the saved game", new DialogNode("Here we go!"), () => GameEngine.Instance.loadGame())
+        }));
 
-        NPC npc = new NPC(1, 1, node1); // Example position (5, 5)
+        NPC npc = new NPC(1, 1, node1); // Example position (1, 1)
 
         return new List<NPC> { npc };
     }
