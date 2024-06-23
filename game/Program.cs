@@ -13,6 +13,15 @@ class Program
         var engine = GameEngine.Instance;
         var inputHandler = InputHandler.Instance;
 
+        var tutorialDialog = new TutorialDialog();
+        tutorialDialog.StartTutorial();
+
+        // Continue to game or restart tutorial based on player choice
+        while (!tutorialDialog.ContinueToGame)
+        {
+            tutorialDialog.StartTutorial();
+        }
+
         var npcs = InitializeNPCs();
         engine.SetNPCs(npcs);
         
@@ -63,8 +72,8 @@ class Program
         DialogNode node1 = new DialogNode("Hello, welcome to Sokoban!");
 
         node1.AddResponse("Hello!", new DialogNode("What brings you here today?", new List<Response> {
-            new Response("I want to save the game", new DialogNode("I'll get right on that!")),
-            new Response("Just passing through.", new DialogNode("Okay, have fun!"))
+        new Response("I want to save the game", new DialogNode("I'll get right on that!")),
+        new Response("Just passing through.", new DialogNode("Okay, have fun!"))
     }));
 
         NPC npc = new NPC(1, 1, node1); // Example position (5, 5)

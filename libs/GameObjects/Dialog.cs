@@ -45,7 +45,7 @@ namespace libs
                 _currentNode = _currentNode.Responses[choice - 1].NextNode;
             }
 
-            _currentNode = _endNode;
+            _currentNode = _startingNode;
 
             Console.WriteLine("End of dialog.");
             Thread.Sleep(2000);
