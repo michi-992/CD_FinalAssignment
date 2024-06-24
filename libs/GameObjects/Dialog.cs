@@ -17,6 +17,12 @@ namespace libs
             _endNode = new DialogNode("There is nothing left to say...");
         }
 
+        public DialogNode CurrentNode
+        {
+            get { return _currentNode; }
+            set { _currentNode = value; }
+        }
+
         public void Start()
         {
             Console.Clear();
@@ -43,6 +49,8 @@ namespace libs
                 }
 
                 _currentNode = _currentNode.Responses[choice - 1].NextNode;
+            
+                _currentNode?.Action?.Invoke();
             }
 
             _currentNode = _startingNode;

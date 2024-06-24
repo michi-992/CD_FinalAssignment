@@ -64,6 +64,25 @@ public sealed class Player : GameObject {
             if (keyInfo.Key == ConsoleKey.T)
             {
                 npc.Dialog.Start();
+
+                // Handle actions based on dialog response
+                switch (npc.Dialog.CurrentNode.Text)
+                {
+                    case "I'll get right on that!":
+                        GameEngine.Instance.saveGame();
+                        break;
+                    case "Sure thing!":
+                        GameEngine.Instance.restartGame();
+                        break;
+                    case "Alright!":
+                        GameEngine.Instance.revertHistory();
+                        break;
+                    case "Here we go!":
+                        GameEngine.Instance.loadGame();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

@@ -60,7 +60,9 @@ class Program
     static private void CheckForNPCInteraction()
     {
         var player = Player.Instance;
-        foreach (var npc in GameEngine.Instance.GetNPCs())
+        var engine = GameEngine.Instance;
+
+        foreach (var npc in engine.GetNPCs())
         {
             player.InteractWithNPC(npc);
         }
