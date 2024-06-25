@@ -49,6 +49,11 @@ public sealed class InputHandler{
                 case ConsoleKey.R:
                     engine.restartGame();
                     break;
+                case ConsoleKey.E:
+                    if (focusedObject.dialog == null && focusedObject.nextToNPC) {
+                        focusedObject.startDialog();
+                    }
+                    break;
                 default:
                     break;
             }
