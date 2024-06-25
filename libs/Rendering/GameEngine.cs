@@ -74,6 +74,8 @@ public sealed class GameEngine
 
         dynamic gameData = FileHandler.ReadJson();
         dynamic gameDataSaved = FileHandler.ReadSavedJson();
+        dynamic dialogData = FileHandler.ReadDialogJson();
+
 
         // checks whether there is a currently saved game and whether it is not bigger than the current level
         initalGameLevel = gameDataSaved.currentLevel; 
@@ -84,9 +86,34 @@ public sealed class GameEngine
         if(gameDataSaved.gameObjects.Count > 0 && (initalGameLevel !> currLevel || initalGameLevel == currLevel)) {
             gameObjectsJSON = gameDataSaved.gameObjects;
         }
+
+        var currDialog = dialogData[currentGameLevel].dialog;
+
         
         map.MapWidth = gameData[currentGameLevel].map.width;
         map.MapHeight = gameData[currentGameLevel].map.height;
+
+
+        if (currDialog.Count != 0) {
+            DialogNode[] options = new DialogNode[currDialog.Count];
+
+            for (int i = 0; i < currDialog.Count; i++) {
+                options[i] = new DialogNode((string)currDialog[i].text);
+            }
+
+            for (int i = 0; i < currDialog.Count; i++) {
+                if (currDialog[i].responses != null) {
+                    foreach (var response in currDialog[i].responses) {
+                        options[i].AddResponse((string)response.text, options[response.nextNode - 1]);
+                    }
+                }
+            }
+
+            map.currDialog = new Dialog(options[0]);
+        }
+        else {
+            map.currDialog = null;
+        }
 
 
         gameObjects = new List<GameObject>();
@@ -249,6 +276,14 @@ public sealed class GameEngine
                     }
                 }
             });
+        }
+
+        GameObject focObj = GameEngine.Instance.GetFocusedObject();
+        if (map.Get(focObj.PosY, focObj.PosX + 1) is NPC || map.Get(focObj.PosY, focObj.PosX - 1) is NPC || map.Get(focObj.PosY + 1, focObj.PosX) is NPC || map.Get(focObj.PosY - 1, focObj.PosX) is NPC) {
+            focObj.nextToNPC = true;
+        }
+        else {
+            focObj.nextToNPC = false;
         }
     }
 

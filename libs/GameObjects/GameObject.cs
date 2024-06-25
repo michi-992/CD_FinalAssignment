@@ -65,13 +65,29 @@ public class GameObject : IGameObject, IMovement
     public Dialog? dialog;
     protected List<DialogNode> dialogNodes = new List<DialogNode>();
 
+    public void startDialog() {
+        dialog = GameEngine.Instance.GetMap().currDialog;
+        
+        Task dialogTask = Task.Run(() => {
+            this.dialog.Start();
+        });
+
+        dialogTask.Wait();
+        dialog = null;
+    }
+
     public void Move(int dx, int dy) {
+        if (dialog == null) {
         _prevPosX = _posX;
         _prevPosY = _posY;
         _posX += dx;
         _posY += dy;
+        }
     }
 
+
+    public bool nextToNPC = false;
+    
     virtual public void onCollision(GameObject obj, GameObject?[,] map) {
 
     }
