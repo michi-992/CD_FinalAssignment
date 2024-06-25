@@ -27,6 +27,7 @@ public sealed class GameEngine
     private GameEngine() {
         //INIT PROPS HERE IF NEEDED
         gameObjectFactory = new GameObjectFactory();
+        
     }
 
     private GameObject? _focusedObject;
@@ -168,6 +169,15 @@ public sealed class GameEngine
         gameObjects.ForEach(delegate(GameObject obj)
         {
             if (obj.Type == GameObjectType.Box)
+            {
+                map.Set(ref obj);
+            }
+        });
+
+        // RENDER THE NPCS
+        gameObjects.ForEach(delegate(GameObject obj)
+        {
+            if (obj.Type == GameObjectType.NPC)
             {
                 map.Set(ref obj);
             }
