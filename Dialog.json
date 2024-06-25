@@ -1,0 +1,52 @@
+[
+  {
+  "dialog": [
+    {
+        "text": "Welcome to the game! Would you like a quick tutorial?",
+        "responses": [
+          {
+            "text": "Yes, please.",
+            "nextNode": 2
+          },
+          {
+            "text": "No, thanks.",
+            "nextNode": 5
+          }
+        ]
+    },
+    {
+          
+      "text": "Great! Here's how you move: Use arrow keys to navigate.",
+      "responses": [
+        {
+          "text": "Got it!",
+          "nextNode": 3
+        }
+      ]
+    },
+    {
+      "text": "To interact with objects, move into them.",
+      "responses": [
+        {
+          "text": "Understood!",
+          "nextNode": 4
+        }
+      ]
+    },
+    {
+      "text": "Enjoy the game!",
+      "responses": []
+    },
+    {
+      "text": "Okay, let's start the game!",
+      "responses": []
+    }
+  ]
+},
+{
+  "dialog": []
+},
+{
+  "dialog": []
+}
+]
