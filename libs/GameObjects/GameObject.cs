@@ -62,6 +62,9 @@ public class GameObject : IGameObject, IMovement
         return _prevPosX;
     }
 
+    public Dialog? dialog;
+    protected List<DialogNode> dialogNodes = new List<DialogNode>();
+
     public void Move(int dx, int dy) {
         _prevPosX = _posX;
         _prevPosY = _posY;
