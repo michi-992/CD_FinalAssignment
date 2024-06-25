@@ -28,25 +28,15 @@ public sealed class Player : GameObject {
             bool moved = false;
             int posX = this.PosX + (this.PosX - this.GetPrevPosX());
             int posY = this.PosY + (this.PosY - this.GetPrevPosY());
-            // CHECK IF ALL BOXES BEFORE THE PLAYER CAN BE MOVED
-            while (!(map[posY, posX] is Obstacle)) {
-                if (map[posY, posX] is Floor || map[posY, posX] is Target) {
-                    // MOVE ALL BOXES BEFORE THE PLAYER
-                    while (posX != gameObject.PosX || posY != gameObject.PosY) {
-                        if (map[posY, posX] is Box) {
-                            map[posY, posX].Move(this.PosX - this.GetPrevPosX(), this.PosY - this.GetPrevPosY());
-                            break;
-                        }
-                        posX += -1 * (this.PosX - this.GetPrevPosX());
-                        posY += -1 * (this.PosY - this.GetPrevPosY());
-                    }
-                    gameObject.Move(this.PosX - this.GetPrevPosX(), this.PosY - this.GetPrevPosY());
-                    moved = true;
-                    break;
-                }
+
+            while (!(map[posY, posX] is Obstacle || map[posY, posX] is Box)) {
+                gameObject.Move(this.PosX - this.GetPrevPosX(), this.PosY - this.GetPrevPosY());
+                moved = true;
                 posX += (this.PosX - this.GetPrevPosX());
                 posY += (this.PosY - this.GetPrevPosY());
+                break;
             }
+
             // AVOID PLAYER MOVEMENT IF BOXES CANNOT BE MOVED
             if (!moved) {
                 this.PosX = this.GetPrevPosX();
