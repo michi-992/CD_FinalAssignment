@@ -5,27 +5,15 @@ namespace libs;
 
 public class DialogNode {
 
-    public string dialogID { get; set; }
-    public string Text { get; set; }
-    public List<Response> Responses = new List<Response>();
+    public string text;
+    public List<Response> responses = new List<Response>();
 
     public DialogNode (string text) {
-        Text = text;
+        this.text = text;
     }
 
-    public DialogNode (string id, string text) {
-        Text = text;
-        dialogID = id;
-    }
-
-    public DialogNode (string text, List<Response> responses) {
-        Text = text;
-        Responses = responses;
-    }
-
-    public void AddResponse(string responseText, DialogNode nextNode)
+    public void AddResponse(string responseText, DialogNode? nextNode)
     {
-        Responses.Add(new Response(responseText, nextNode));
+        this.responses.Add(new Response(responseText, nextNode));
     }
-
 }
