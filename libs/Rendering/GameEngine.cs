@@ -85,7 +85,34 @@ public sealed class GameEngine
         // checks whether SETUP gameObjects or saved game gameObjects should be used
         var gameObjectsJSON = gameData[currentGameLevel].gameObjects;
         if(gameDataSaved.gameObjects.Count > 0 && (initalGameLevel !> currLevel || initalGameLevel == currLevel)) {
-            gameObjectsJSON = gameDataSaved.gameObjects;
+            int currentIndex = 0;
+            for (int i = 0; i < gameObjectsJSON.Count; i++) {
+                if (gameObjectsJSON[i].Type == 0) {
+                    for (int j = 0; j < gameDataSaved.gameObjects.Count; j++) {
+                        if (gameObjectsJSON[i].Type == gameDataSaved.gameObjects[j].Type) {
+                            gameObjectsJSON[i].PosX = gameDataSaved.gameObjects[j].PosX;
+                            gameObjectsJSON[i].PosY = gameDataSaved.gameObjects[j].PosY;
+                            break;
+                        }
+                    }
+                }
+
+                if (gameObjectsJSON[i].Type == 2) {
+                    for (int j = currentIndex; j < gameDataSaved.gameObjects.Count; j++) {
+                        if (gameObjectsJSON[i].Type == gameDataSaved.gameObjects[j].Type) {
+                            gameObjectsJSON[i].PosX = gameDataSaved.gameObjects[j].PosX;
+                            gameObjectsJSON[i].PosY = gameDataSaved.gameObjects[j].PosY;
+                            gameObjectsJSON[i].CharRepresentation = gameDataSaved.gameObjects[j].CharRepresentation;
+                            currentIndex++;
+
+                            break;
+                        } else {
+                            currentIndex++;
+                        }
+                        
+                    }
+                }
+            }
         }
 
         var currDialog = dialogData[currentGameLevel].dialog;
@@ -317,7 +344,7 @@ public sealed class GameEngine
         // iterats over all gameobjects in last item of map.history and adds them to the list if not Floor
         for (int i = 0; i < map.MapWidth; i++) {
             for (int j = 0; j < map.MapHeight; j++) {
-                if(map.history.Last()[j,i].Type != GameObjectType.Floor) gameObjects.Add(map.history.Last()[j,i]);
+                if(map.history.Last()[j,i].Type == GameObjectType.Player || map.history.Last()[j,i].Type == GameObjectType.Box) gameObjects.Add(map.history.Last()[j,i]);
             }
         }
 

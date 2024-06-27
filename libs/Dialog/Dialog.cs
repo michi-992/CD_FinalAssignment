@@ -41,6 +41,6 @@ public class Dialog
             this.currentNode = this.currentNode.responses[choice - 1].nextNode;
             GameEngine.Instance.Render();
         }
-        Thread.Sleep(2000);
+        Thread.Sleep(3000);
     }
 }

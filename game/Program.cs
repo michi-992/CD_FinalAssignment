@@ -18,6 +18,7 @@ class Program
         
         engine.Setup(currLevel);
         currLevel = engine.GetCurrentLevel();
+        bool savedByNPC = false;
 
         // Main game loop
         while (true)
@@ -42,6 +43,11 @@ class Program
                 if (engine.GetRestartGame()) {
                     restartGame(engine);
                     break;
+                }
+
+                if (engine.dialog.currentNode.text == "I saved the game for you!" && !savedByNPC) {
+                    engine.saveGame();
+                    savedByNPC = true;
                 }
             
                 // Handle keyboard input
