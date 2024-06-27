@@ -89,12 +89,25 @@ public sealed class GameEngine
         }
 
         var currDialog = dialogData[currentGameLevel].dialog;
+        createDialog(currDialog);
 
         
         map.MapWidth = gameData[currentGameLevel].map.width;
         map.MapHeight = gameData[currentGameLevel].map.height;
 
+        
+        gameObjects = new List<GameObject>();
 
+        foreach (var gameObject in gameObjectsJSON)
+        {
+            AddGameObject(CreateGameObject(gameObject));
+        }
+        
+        _focusedObject = gameObjects.OfType<Player>().First();
+
+    }
+
+    public void createDialog(dynamic currDialog) {
         if (currDialog.Count != 0) {
             DialogNode[] options = new DialogNode[currDialog.Count];
 
@@ -115,17 +128,6 @@ public sealed class GameEngine
         else {
            dialog = null;
         }
-
-
-        gameObjects = new List<GameObject>();
-
-        foreach (var gameObject in gameObjectsJSON)
-        {
-            AddGameObject(CreateGameObject(gameObject));
-        }
-        
-        _focusedObject = gameObjects.OfType<Player>().First();
-
     }
 
     public void Render() {
@@ -153,7 +155,7 @@ public sealed class GameEngine
         }
     }
 
-        public string GetTip() {
+    public string GetTip() {
         Player player = gameObjects.OfType<Player>().FirstOrDefault();
         if (player != null && player.NextToNPC(map.GetMap())) {
             return "Press E to interact with NPC";
