@@ -13,9 +13,9 @@ public class Dialog
 
     public void Start()
     {
-        //(int x, int y) = Console.GetCursorPosition();
-        //TODO Clear Buffer of Console to overwrite the nodes
         while (this.currentNode != null) {
+            Console.Clear();
+
             Console.WriteLine(this.currentNode.text);
 
             if (this.currentNode.responses == null || this.currentNode.responses.Count == 0) {

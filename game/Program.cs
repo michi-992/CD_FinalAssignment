@@ -47,10 +47,10 @@ class Program
                 engine.Update();
 
                 if (keyInfo.Key == ConsoleKey.M)
-            {
-                MainMenuOpen = true;
-                continue;
-            }
+                {
+                    MainMenuOpen = true;
+                    continue;
+                }
             }
         }
     }
@@ -72,7 +72,7 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== Main Menu ===");
-        Console.WriteLine("1. Start Game");
+        Console.WriteLine("1. Start/Continue Game");
         Console.WriteLine("2. Tutorial");
 
         int choice;
@@ -97,30 +97,6 @@ class Program
             tutorialDialog.ShowTutorial();
         }
     }
-
-    /*static private void ShowTutorial()
-    {
-        Console.WriteLine("=== Tutorial ===");
-        Console.WriteLine("Use the arrow keys to move your character.");
-        Console.WriteLine("Press 'Z' to undo the last move.");
-        Console.WriteLine("Press 'S' to save the game.");
-        Console.WriteLine("Press 'R' to restart the game.");
-        Console.WriteLine("Press 'M' to open the main menu.");
-
-        Console.WriteLine("1. Continue");
-
-        int choice;
-        while(true)
-        {
-            Console.Write("Choose an option: ");
-            if (int.TryParse(Console.ReadLine(), out choice) && choice == 1)
-            {
-                break;
-            }
-            Console.WriteLine("Invalid choice, please try again.");
-        }
-        Console.Clear();
-    }*/
 
     static private void endGame() {
         // overwrite saved JSON game state 

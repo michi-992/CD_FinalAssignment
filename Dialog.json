@@ -108,7 +108,7 @@
       "responses": [
         {
           "text": "A potion",
-          "nextNode": 3
+          "nextNode": 2
         },
         {
           "text": "A Spell",
@@ -116,7 +116,7 @@
         },
         {
           "text": "A Mirror",
-          "nextNode": 2
+          "nextNode": 3
         },
         {
           "text": "A Broomstick",
