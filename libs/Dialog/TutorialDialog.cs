@@ -31,6 +31,8 @@ namespace libs
                 Console.Clear();
                 var currentNode = tutorialDialogNodes.FirstOrDefault(node => node.Id == currentId);
 
+                Console.WriteLine("Hexoban");
+                Console.WriteLine("");
                 Console.WriteLine("Welcome, young witch apprentice!");
                 Console.WriteLine("Enter the number of the tutorial step you want to go to (1-8), press Enter, or press '0' to exit.");
                 Console.WriteLine("1: Goal. 2: Movement. 3: Warning. 4: Undo. 5: NPCs. 6: Restart. 7: Main Menu. 8: Farewell.");

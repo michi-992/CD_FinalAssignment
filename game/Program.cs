@@ -27,6 +27,9 @@ class Program
                 ShowMainMenu(tutorialDialog);
             } else
             {
+                Console.WriteLine("Hexoban");
+                DisplayTip(engine.GetTip());
+
                 engine.Render();
 
                 // CHECK WIN CONDITION
@@ -55,6 +58,14 @@ class Program
         }
     }
 
+    static private void DisplayTip(string tip)
+    {
+        Console.SetCursorPosition(0, 1);
+        Console.WriteLine(new string(' ', Console.WindowWidth));
+        Console.SetCursorPosition(0, 1);
+        Console.WriteLine(tip);
+    }
+
     static private void nextLevel(GameEngine engine) {
         // remove map history once level completed
         engine.removeHistory();
@@ -71,6 +82,8 @@ class Program
     static private void ShowMainMenu(TutorialDialog tutorialDialog)
     {
         Console.Clear();
+        Console.WriteLine("Hexoban");
+        Console.WriteLine();
         Console.WriteLine("=== Main Menu ===");
         Console.WriteLine("1. Start/Continue Game");
         Console.WriteLine("2. Tutorial");
@@ -105,6 +118,7 @@ class Program
         File.WriteAllText("../SavedFile.json", output);
 
         Console.Clear();
+        Console.WriteLine("Hexoban");
         Console.WriteLine("Congratulations! You have completed the game!");
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey();

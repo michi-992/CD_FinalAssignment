@@ -15,6 +15,8 @@ public class Dialog
     {
         while (this.currentNode != null) {
             Console.Clear();
+            Console.WriteLine("Hexoban");
+            Console.WriteLine();
 
             Console.WriteLine(this.currentNode.text);
 

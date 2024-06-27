@@ -133,6 +133,9 @@ public sealed class GameEngine
         //Clean the map
         Console.Clear();
 
+        Console.WriteLine("Hexoban");
+        DisplayTip(GetTip());
+
         map.Initialize();
 
         PlaceGameObjects();
@@ -148,6 +151,22 @@ public sealed class GameEngine
             }
             Console.WriteLine();
         }
+    }
+
+        public string GetTip() {
+        Player player = gameObjects.OfType<Player>().FirstOrDefault();
+        if (player != null && player.NextToNPC(map.GetMap())) {
+            return "Press E to interact with NPC";
+        }
+        return string.Empty;
+    }
+
+    static private void DisplayTip(string tip)
+    {
+        Console.SetCursorPosition(0, 1);
+        Console.WriteLine(new string(' ', Console.WindowWidth));
+        Console.SetCursorPosition(0, 1);
+        Console.WriteLine(tip);
     }
     
     // Method to create GameObject using the factory from clients
