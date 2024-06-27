@@ -3,7 +3,8 @@ namespace libs;
 public class Floor : GameObject {
 
     public Floor () : base(){
-        Type = GameObjectType.Floor;
-        CharRepresentation = '.';
+        this.Type = GameObjectType.Floor;
+        this.CharRepresentation = '.';
+        this.Color = ConsoleColor.Gray;
     }
 }

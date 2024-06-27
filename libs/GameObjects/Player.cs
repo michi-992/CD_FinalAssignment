@@ -16,7 +16,6 @@ public sealed class Player : GameObject {
     private Player () : base(){
         Type = GameObjectType.Player;
         CharRepresentation = '☻';
-        Color = ConsoleColor.DarkYellow;
     }
 
     public override void onCollision(GameObject gameObject, GameObject?[,] map) {

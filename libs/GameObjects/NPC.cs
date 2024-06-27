@@ -4,7 +4,7 @@ public class NPC : GameObject {
 
     public NPC () : base(){
         this.Type = GameObjectType.NPC;
-        this.CharRepresentation = 'N';
-        this.Color = ConsoleColor.DarkGreen;
+        this.CharRepresentation = '☻';
+        this.Color = ConsoleColor.DarkYellow;
     }
 }

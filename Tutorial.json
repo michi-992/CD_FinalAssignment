@@ -1,15 +1,15 @@
 [
     {
       "Id": 1,
-      "Text": "1. In Sokoban, your goal is to push all the magical crates onto the glowing stars."
+      "Text": "1. In Hexoban, your goal is to push all the magical purple runes onto their green counterpart."
     },
     {
       "Id": 2,
-      "Text": "2. Use your arcane powers to move your character with the arrow keys on your enchanted broomstick."
+      "Text": "2. Use your arcane powers to move your character with the arrow keys on your enchanted spellbook."
     },
     {
       "Id": 3,
-      "Text": "3. Beware! Once a crate is pushed, it cannot be pulled back. Plan your moves carefully."
+      "Text": "3. Beware! Once a rune is pushed, it cannot be pulled back. Plan your moves carefully."
     },
     {
       "Id": 4,
@@ -17,11 +17,11 @@
     },
     {
       "Id": 5,
-      "Text": "5. Approach NPCs, solve their riddles, and you can save your progress."
+      "Text": "5. Approach the yellow NPCs, solve their riddles, and you can save your progress in your spellbook."
     },
     {
       "Id": 6,
-      "Text": "6. If you ever get stuck, press 'R' to restart the challenge."
+      "Text": "6. If you ever get stuck, press 'R' to restart the whole game."
     },
     {
       "Id": 7,

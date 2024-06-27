@@ -28,7 +28,6 @@ class Program
                 ShowMainMenu(tutorialDialog);
             } else
             {
-                Console.WriteLine("Hexoban");
                 DisplayTip(engine.GetTip());
 
                 engine.Render();
@@ -88,7 +87,7 @@ class Program
     static private void ShowMainMenu(TutorialDialog tutorialDialog)
     {
         Console.Clear();
-        Console.WriteLine("Hexoban");
+        Console.WriteLine("HEXOBAN");
         Console.WriteLine();
         Console.WriteLine("=== Main Menu ===");
         Console.WriteLine("1. Start/Continue Game");
@@ -124,7 +123,7 @@ class Program
         File.WriteAllText("../SavedFile.json", output);
 
         Console.Clear();
-        Console.WriteLine("Hexoban");
+        Console.WriteLine("HEXOBAN");
         Console.WriteLine("Congratulations! You have completed the game!");
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey();

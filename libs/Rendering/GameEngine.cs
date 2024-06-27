@@ -162,7 +162,9 @@ public sealed class GameEngine
         //Clean the map
         Console.Clear();
 
-        Console.WriteLine("Hexoban");
+
+        var currentLevel = GetCurrentLevel() + 1;
+        Console.WriteLine("HEXOBAN - Level " + currentLevel);
         DisplayTip(GetTip());
 
         map.Initialize();
@@ -331,7 +333,7 @@ public sealed class GameEngine
     public bool allTargetsFilled() {
         foreach (GameObject obj in gameObjects) {
             if (obj is Target) {
-                if (map.Get(obj.PosY, obj.PosX).Type != GameObjectType.Box) {
+                if (map.Get(obj.PosY, obj.PosX).Type != GameObjectType.Box || map.Get(obj.PosY, obj.PosX).CharRepresentation != obj.CharRepresentation) {
                     return false;
                 }
             }
