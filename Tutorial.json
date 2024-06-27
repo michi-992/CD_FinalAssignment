@@ -1,0 +1,35 @@
+[
+    {
+      "Id": 1,
+      "Text": "1. In Sokoban, your goal is to push all the magical crates onto the glowing stars."
+    },
+    {
+      "Id": 2,
+      "Text": "2. Use your arcane powers to move your character with the arrow keys on your enchanted broomstick."
+    },
+    {
+      "Id": 3,
+      "Text": "3. Beware! Once a crate is pushed, it cannot be pulled back. Plan your moves carefully."
+    },
+    {
+      "Id": 4,
+      "Text": "4. Press 'Z' to undo your last move if you need to rethink your strategy."
+    },
+    {
+      "Id": 5,
+      "Text": "5. Approach NPCs, solve their riddles, and you can save your progress."
+    },
+    {
+      "Id": 6,
+      "Text": "6. If you ever get stuck, press 'R' to restart the challenge."
+    },
+    {
+      "Id": 7,
+      "Text": "7. When you wish to return to the main menu, press 'M'."
+    },
+    {
+      "Id": 8,
+      "Text": "8. May the magical spirits guide you. Press '0' to return to the main menu and begin your journey!"
+    }
+  ]
+  

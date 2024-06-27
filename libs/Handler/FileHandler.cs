@@ -18,6 +18,10 @@ public static class FileHandler
     private static string dialogFilePath;
     private readonly static string envVarDialog = "GAME_DIALOG_SETUP_PATH";
 
+
+    private static string tutorialFilePath;
+    private readonly static string envVarTutorial = "GAME_TUTORIAL_SETUP_PATH";
+
     static FileHandler()
     {
         Initialize();
@@ -33,6 +37,9 @@ public static class FileHandler
         };
         if(Environment.GetEnvironmentVariable(envVarDialog) != null){
             dialogFilePath = Environment.GetEnvironmentVariable(envVarDialog);
+        };
+        if(Environment.GetEnvironmentVariable(envVarTutorial) != null){
+            tutorialFilePath = Environment.GetEnvironmentVariable(envVarTutorial);
         };
     }
 
@@ -99,6 +106,29 @@ public static class FileHandler
         catch (FileNotFoundException)
         {
             throw new FileNotFoundException($"JSON file not found at path: {dialogFilePath}");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error reading JSON file: {ex.Message}");
+        }
+    }
+
+    public static dynamic ReadTutorialJson()
+    {
+        if (string.IsNullOrEmpty(tutorialFilePath))
+        {
+            throw new InvalidOperationException("JSON file path not provided in environment variable");
+        }
+
+        try
+        {
+            string jsonContent = File.ReadAllText(tutorialFilePath);
+            dynamic jsonData = JsonConvert.DeserializeObject(jsonContent);
+            return jsonData;
+        }
+        catch (FileNotFoundException)
+        {
+            throw new FileNotFoundException($"JSON file not found at path: {tutorialFilePath}");
         }
         catch (Exception ex)
         {
