@@ -67,6 +67,7 @@ public sealed class GameEngine
         resetGame = restart;
     }
 
+    public Dialog? dialog  = null;
 
     public void Setup(int currLevel = 0){
         //Added for proper display of game characters
@@ -109,10 +110,10 @@ public sealed class GameEngine
                 }
             }
 
-            map.currDialog = new Dialog(options[0]);
+            dialog = new Dialog(options[0]);
         }
         else {
-            map.currDialog = null;
+           dialog = null;
         }
 
 

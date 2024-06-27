@@ -66,7 +66,7 @@ public class GameObject : IGameObject, IMovement
     protected List<DialogNode> dialogNodes = new List<DialogNode>();
 
     public void startDialog() {
-        dialog = GameEngine.Instance.GetMap().currDialog;
+        dialog = GameEngine.Instance.dialog;
         
         Task dialogTask = Task.Run(() => {
             this.dialog.Start();
