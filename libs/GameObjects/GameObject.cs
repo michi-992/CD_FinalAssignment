@@ -85,8 +85,6 @@ public class GameObject : IGameObject, IMovement
         }
     }
 
-
-    public bool nextToNPC = false;
     
     virtual public void onCollision(GameObject obj, GameObject?[,] map) {
 

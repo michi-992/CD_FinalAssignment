@@ -278,14 +278,6 @@ public sealed class GameEngine
                 }
             });
         }
-
-        GameObject focObj = GameEngine.Instance.GetFocusedObject();
-        if (map.Get(focObj.PosY, focObj.PosX + 1) is NPC || map.Get(focObj.PosY, focObj.PosX - 1) is NPC || map.Get(focObj.PosY + 1, focObj.PosX) is NPC || map.Get(focObj.PosY - 1, focObj.PosX) is NPC) {
-            focObj.nextToNPC = true;
-        }
-        else {
-            focObj.nextToNPC = false;
-        }
     }
 
     public bool allTargetsFilled() {

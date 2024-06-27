@@ -25,6 +25,7 @@ public sealed class Player : GameObject {
             this.PosY = this.GetPrevPosY();
         }
         else if (gameObject.Type == GameObjectType.NPC) {
+            gameObject.startDialog();
             this.PosX = this.GetPrevPosX();
             this.PosY = this.GetPrevPosY();
         }
