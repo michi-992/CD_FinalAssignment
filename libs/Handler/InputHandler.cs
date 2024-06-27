@@ -5,6 +5,9 @@ public sealed class InputHandler{
     private static InputHandler? _instance;
     private GameEngine engine;
 
+    private DateTime lastInteractionTime = DateTime.MinValue;
+    private readonly TimeSpan interactionCooldown = TimeSpan.FromSeconds(5);
+
     public static InputHandler Instance {
         get{
             if(_instance == null)
@@ -50,10 +53,7 @@ public sealed class InputHandler{
                     engine.restartGame();
                     break;
                 case ConsoleKey.E:
-                    if (Player.Instance.NextToNPC(engine.GetMap().GetMap()))
-                    {
-                        focusedObject.startDialog();
-                    }
+                    HandleInteraction();
                     break;
                 default:
                     break;
@@ -62,4 +62,17 @@ public sealed class InputHandler{
         
     }
 
+    private void HandleInteraction()
+    {
+        GameObject focusedObject = engine.GetFocusedObject();
+
+        if (DateTime.Now - lastInteractionTime >= interactionCooldown)
+        {
+            lastInteractionTime = DateTime.Now;
+            if (Player.Instance.NextToNPC(engine.GetMap().GetMap()))
+            {
+                focusedObject.startDialog();
+            }
+        }
+    }
 }
