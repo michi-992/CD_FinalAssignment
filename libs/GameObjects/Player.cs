@@ -25,7 +25,6 @@ public sealed class Player : GameObject {
             this.PosY = this.GetPrevPosY();
         }
         else if (gameObject.Type == GameObjectType.NPC) {
-            gameObject.startDialog();
             this.PosX = this.GetPrevPosX();
             this.PosY = this.GetPrevPosY();
         }
@@ -48,5 +47,18 @@ public sealed class Player : GameObject {
                 this.PosY = this.GetPrevPosY();
             }
         }
+    }
+    public bool NextToNPC(GameObject?[,] map) {
+        int[] dx = { -1, 1, 0, 0 };
+        int[] dy = { 0, 0, -1, 1 };
+
+        for (int i = 0; i < 4; i++) {
+            int newX = this.PosX + dx[i];
+            int newY = this.PosY + dy[i];
+            if (map[newY, newX] != null && map[newY, newX].Type == GameObjectType.NPC) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -49,7 +49,12 @@ public sealed class InputHandler{
                 case ConsoleKey.R:
                     engine.restartGame();
                     break;
-                
+                case ConsoleKey.E:
+                    if (Player.Instance.NextToNPC(engine.GetMap().GetMap()))
+                    {
+                        focusedObject.startDialog();
+                    }
+                    break;
                 default:
                     break;
             }
