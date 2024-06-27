@@ -6,12 +6,15 @@ using Newtonsoft.Json;
 class Program
 {    
     static private int currLevel = 0;
+
+    static private bool MainMenuOpen = true;
     static void Main(string[] args)
     {
         //Setup
         Console.CursorVisible = false;
         var engine = GameEngine.Instance;
         var inputHandler = InputHandler.Instance;
+        var tutorialDialog = new TutorialDialog();
         
         engine.Setup(currLevel);
         currLevel = engine.GetCurrentLevel();
@@ -19,24 +22,36 @@ class Program
         // Main game loop
         while (true)
         {
-            engine.Render();
+            if (MainMenuOpen)
+            {
+                ShowMainMenu(tutorialDialog);
+            } else
+            {
+                engine.Render();
 
-            // CHECK WIN CONDITION
-            if (engine.allTargetsFilled()) {
-                nextLevel(engine);
-                break;
-            }
+                // CHECK WIN CONDITION
+                if (engine.allTargetsFilled()) {
+                    nextLevel(engine);
+                    break;
+                }
 
-            // Check for restart key press
-            if (engine.GetRestartGame()) {
-                restartGame(engine);
-                break;
-            }
+                // Check for restart key press
+                if (engine.GetRestartGame()) {
+                    restartGame(engine);
+                    break;
+                }
             
-            // Handle keyboard input
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            inputHandler.Handle(keyInfo);
-            engine.Update();
+                // Handle keyboard input
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                inputHandler.Handle(keyInfo);
+                engine.Update();
+
+                if (keyInfo.Key == ConsoleKey.M)
+            {
+                MainMenuOpen = true;
+                continue;
+            }
+            }
         }
     }
 
@@ -52,6 +67,60 @@ class Program
         Console.Clear();
         Main(null);
     }
+
+    static private void ShowMainMenu(TutorialDialog tutorialDialog)
+    {
+        Console.Clear();
+        Console.WriteLine("=== Main Menu ===");
+        Console.WriteLine("1. Start Game");
+        Console.WriteLine("2. Tutorial");
+
+        int choice;
+        while (true)
+        {
+            Console.Write("Choose an option: ");
+            if (int.TryParse(Console.ReadLine(), out choice) && (choice == 1 || choice == 2))
+            {
+                break;
+            }
+            Console.WriteLine("Invalid choice, please try again.");
+        }
+
+        if (choice == 1)
+        {
+            MainMenuOpen = false;
+            Console.Clear();
+        }
+        else if (choice == 2)
+        {
+            Console.Clear();
+            tutorialDialog.ShowTutorial();
+        }
+    }
+
+    /*static private void ShowTutorial()
+    {
+        Console.WriteLine("=== Tutorial ===");
+        Console.WriteLine("Use the arrow keys to move your character.");
+        Console.WriteLine("Press 'Z' to undo the last move.");
+        Console.WriteLine("Press 'S' to save the game.");
+        Console.WriteLine("Press 'R' to restart the game.");
+        Console.WriteLine("Press 'M' to open the main menu.");
+
+        Console.WriteLine("1. Continue");
+
+        int choice;
+        while(true)
+        {
+            Console.Write("Choose an option: ");
+            if (int.TryParse(Console.ReadLine(), out choice) && choice == 1)
+            {
+                break;
+            }
+            Console.WriteLine("Invalid choice, please try again.");
+        }
+        Console.Clear();
+    }*/
 
     static private void endGame() {
         // overwrite saved JSON game state 

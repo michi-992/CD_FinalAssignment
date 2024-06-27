@@ -49,6 +49,7 @@ public sealed class InputHandler{
                 case ConsoleKey.R:
                     engine.restartGame();
                     break;
+                
                 default:
                     break;
             }

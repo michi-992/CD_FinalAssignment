@@ -311,5 +311,4 @@ public sealed class GameEngine
     public void restartGame() {
         resetGame = true;
     }
-
 }
