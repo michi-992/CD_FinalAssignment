@@ -2,40 +2,40 @@
   {
   "dialog": [
     {
-        "text": "I fly without wings, I cry without eyes. Whenever I go, darkness flies. What am I?",
+        "text": "Let's see if you can solve this riddle... I fly without wings, I cry without eyes. Whenever I go, darkness flies. What am I?",
         "responses": [
           {
-            "text": "A Broomstick",
+            "text": " A Broomstick",
             "nextNode": 2
           },
           {
-            "text": "A Bat",
+            "text": " A Bat",
             "nextNode": 2
           },
           {
-            "text": "An Owl",
+            "text": " An Owl",
             "nextNode": 2
           },
           {
-            "text": "A Cloud",
+            "text": " A Cloud",
             "nextNode": 3
           }
         ]
     },
     {
           
-      "text": "You could not even solve that easy riddle?  Disappointing. Scram.",
+      "text": "You could not even solve that? How dare you call yourself a witch apprentice? Disappointing. Scram.",
       "responses": []
     },
     {
-      "text": "Congrats! I expected no less from you. What do you want to do?",
+      "text": "Congrats! I expected no less from you. What would you like to do?",
       "responses": [
         {
-          "text": "Save the game",
+          "text": " Save the game.",
           "nextNode": 4
         },
         {
-          "text": "Continue playing",
+          "text": " Continue playing.",
           "nextNode": 5
         }
       ]
@@ -53,40 +53,40 @@
 {
   "dialog": [
     {
-      "text": "I am tall when I am young, and I am short when I am old. What am I?",
+      "text": "I am feeling nice, so I will give you an easy one. I am tall when I am young, and I am short when I am old. What am I?",
       "responses": [
         {
-          "text": "A Candle",
+          "text": " A Candle",
           "nextNode": 3
         },
         {
-          "text": "A Wand",
+          "text": " A Wand",
           "nextNode": 2
         },
         {
-          "text": "A Witch's Hat",
+          "text": " A Witch's Hat",
           "nextNode": 2
         },
         {
-          "text": "A Broomstick",
+          "text": " A Broomstick",
           "nextNode": 2
         }
       ]
   },
   {
         
-    "text": "You could not even solve that easy riddle?  Disappointing. Scram.",
+    "text": "How did you get that one wrong? I gave you an easy one! No game saving for you!.",
     "responses": []
   },
   {
-    "text": "Congrats! I expected no less from you. What do you want to do?",
+    "text": "Maybe that was too easy... What would you like to do?",
     "responses": [
       {
-        "text": "Save the game",
+        "text": " Save the game.",
         "nextNode": 4
       },
       {
-        "text": "Continue playing",
+        "text": " Continue playing.",
         "nextNode": 5
       }
     ]
@@ -104,40 +104,40 @@
 {
   "dialog": [
     {
-      "text": "I make two people out of one. What am I?",
+      "text": "You know the drill. I make two people out of one. What am I?",
       "responses": [
         {
-          "text": "A potion",
+          "text": " A potion",
           "nextNode": 2
         },
         {
-          "text": "A Spell",
+          "text": " A Spell",
           "nextNode": 2
         },
         {
-          "text": "A Mirror",
+          "text": " A Mirror",
           "nextNode": 3
         },
         {
-          "text": "A Broomstick",
+          "text": " A Broomstick",
           "nextNode": 2
         }
       ]
   },
   {
         
-    "text": "You could not even solve that easy riddle?  Disappointing. Scram.",
+    "text": "You chose the wrong one...",
     "responses": []
   },
   {
-    "text": "Congrats! I expected no less from you. What do you want to do?",
+    "text": "Proud of you, young apprentice! What would you like to do?",
     "responses": [
       {
-        "text": "Save the game",
+        "text": " Save the game.",
         "nextNode": 4
       },
       {
-        "text": "Continue playing",
+        "text": " Continue playing.",
         "nextNode": 5
       }
     ]
