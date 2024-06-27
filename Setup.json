@@ -492,6 +492,12 @@
         "Color": 12,
         "PosX": 8,
         "PosY": 3
+      },
+      {
+        "Type": 5,
+        "Color": 3,
+        "PosX": 1,
+        "PosY": 1
       }
     ]
   },
@@ -923,6 +929,12 @@
       },
       {
         "Type": 0,
+        "Color": 5,
+        "PosX": 11,
+        "PosY": 7
+      },
+      {
+        "Type": 5,
         "Color": 5,
         "PosX": 11,
         "PosY": 8

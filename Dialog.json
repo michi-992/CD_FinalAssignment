@@ -2,51 +2,154 @@
   {
   "dialog": [
     {
-        "text": "Welcome to the game! Would you like a quick tutorial?",
+        "text": "I fly without wings, I cry without eyes. Whenever I go, darkness flies. What am I?",
         "responses": [
           {
-            "text": "Yes, please.",
+            "text": "A Broomstick",
             "nextNode": 2
           },
           {
-            "text": "No, thanks.",
-            "nextNode": 5
+            "text": "A Bat",
+            "nextNode": 2
+          },
+          {
+            "text": "An Owl",
+            "nextNode": 2
+          },
+          {
+            "text": "A Cloud",
+            "nextNode": 3
           }
         ]
     },
     {
           
-      "text": "Great! Here's how you move: Use arrow keys to navigate.",
-      "responses": [
-        {
-          "text": "Got it!",
-          "nextNode": 3
-        }
-      ]
-    },
-    {
-      "text": "To interact with objects, move into them.",
-      "responses": [
-        {
-          "text": "Understood!",
-          "nextNode": 4
-        }
-      ]
-    },
-    {
-      "text": "Enjoy the game!",
+      "text": "You could not even solve that easy riddle?  Disappointing. Scram.",
       "responses": []
     },
     {
-      "text": "Okay, let's start the game!",
+      "text": "Congrats! I expected no less from you. What do you want to do?",
+      "responses": [
+        {
+          "text": "Save the game",
+          "nextNode": 4
+        },
+        {
+          "text": "Continue playing",
+          "nextNode": 5
+        }
+      ]
+    },
+    {
+      "text": "I saved the game for you!",
+      "responses": []
+    },
+    {
+      "text": "Have fun and good luck!",
       "responses": []
     }
   ]
 },
 {
-  "dialog": []
+  "dialog": [
+    {
+      "text": "I am tall when I am young, and I am short when I am old. What am I?",
+      "responses": [
+        {
+          "text": "A Candle",
+          "nextNode": 3
+        },
+        {
+          "text": "A Wand",
+          "nextNode": 2
+        },
+        {
+          "text": "A Witch's Hat",
+          "nextNode": 2
+        },
+        {
+          "text": "A Broomstick",
+          "nextNode": 2
+        }
+      ]
+  },
+  {
+        
+    "text": "You could not even solve that easy riddle?  Disappointing. Scram.",
+    "responses": []
+  },
+  {
+    "text": "Congrats! I expected no less from you. What do you want to do?",
+    "responses": [
+      {
+        "text": "Save the game",
+        "nextNode": 4
+      },
+      {
+        "text": "Continue playing",
+        "nextNode": 5
+      }
+    ]
+  },
+  {
+    "text": "I saved the game for you!",
+    "responses": []
+  },
+  {
+    "text": "Have fun and good luck!",
+    "responses": []
+  }
+  ]
 },
 {
-  "dialog": []
+  "dialog": [
+    {
+      "text": "I make two people out of one. What am I?",
+      "responses": [
+        {
+          "text": "A potion",
+          "nextNode": 3
+        },
+        {
+          "text": "A Spell",
+          "nextNode": 2
+        },
+        {
+          "text": "A Mirror",
+          "nextNode": 2
+        },
+        {
+          "text": "A Broomstick",
+          "nextNode": 2
+        }
+      ]
+  },
+  {
+        
+    "text": "You could not even solve that easy riddle?  Disappointing. Scram.",
+    "responses": []
+  },
+  {
+    "text": "Congrats! I expected no less from you. What do you want to do?",
+    "responses": [
+      {
+        "text": "Save the game",
+        "nextNode": 4
+      },
+      {
+        "text": "Continue playing",
+        "nextNode": 5
+      }
+    ]
+  },
+  {
+    "text": "I saved the game for you!",
+    "responses": []
+  },
+  {
+    "text": "Have fun and good luck!",
+    "responses": []
+  }
+  ]
 }
 ]
