@@ -92,12 +92,13 @@ class Program
         Console.WriteLine("=== Main Menu ===");
         Console.WriteLine("1. Start/Continue Game");
         Console.WriteLine("2. Tutorial");
+        Console.WriteLine("3. Exit the game");
 
         int choice;
         while (true)
         {
             Console.Write("Choose an option: ");
-            if (int.TryParse(Console.ReadLine(), out choice) && (choice == 1 || choice == 2))
+            if (int.TryParse(Console.ReadLine(), out choice) && (choice == 1 || choice == 2 || choice == 3))
             {
                 break;
             }
@@ -113,6 +114,10 @@ class Program
         {
             Console.Clear();
             tutorialDialog.ShowTutorial();
+        }
+        else if (choice == 3) 
+        {
+            Environment.Exit(0);
         }
     }
 
