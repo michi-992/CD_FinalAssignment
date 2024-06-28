@@ -1,25 +1,29 @@
 namespace libs;
 
+// sealed class, inherits from GameObject
 public sealed class Player : GameObject {
-    private static Player _instance = null;
+    private static Player _instance = null; // singleton instance
 
+    // accessing singleton instance
     public static Player Instance {
         get{
             if(_instance == null)
             {
-                _instance = new Player();
+                _instance = new Player(); // returns new instance if there isn't one
             }
-            return _instance;
+            return _instance; // returns existing instance
         }
     }
 
     private Player () : base(){
-        Type = GameObjectType.Player;
+        Type = GameObjectType.Player; // sets type to Player
         CharRepresentation = '☻';
     }
 
+    // collision handling
     public override void onCollision(GameObject gameObject, GameObject?[,] map) {
         if (gameObject.Type == GameObjectType.Obstacle) {
+            // Reset position to previous position if colliding with Obstacle or NPC
             this.PosX = this.GetPrevPosX();
             this.PosY = this.GetPrevPosY();
         }
@@ -32,6 +36,7 @@ public sealed class Player : GameObject {
             int posX = this.PosX + (this.PosX - this.GetPrevPosX());
             int posY = this.PosY + (this.PosY - this.GetPrevPosY());
 
+            // moves the Box in the direction Player was moving
             while (!(map[posY, posX] is Obstacle || map[posY, posX] is Box)) {
                 gameObject.Move(this.PosX - this.GetPrevPosX(), this.PosY - this.GetPrevPosY());
                 moved = true;
@@ -47,10 +52,13 @@ public sealed class Player : GameObject {
             }
         }
     }
+
+    // Checks if player is next to an NPC
     public bool NextToNPC(GameObject?[,] map) {
         int[] dx = { -1, 1, 0, 0 };
         int[] dy = { 0, 0, -1, 1 };
 
+        // checks adjacent positions for NPC
         for (int i = 0; i < 4; i++) {
             int newX = this.PosX + dx[i];
             int newY = this.PosY + dy[i];
@@ -58,6 +66,6 @@ public sealed class Player : GameObject {
                 return true;
             }
         }
-        return false;
+        return false; // if no NPC is adjacent
     }
 }

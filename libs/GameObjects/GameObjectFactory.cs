@@ -1,34 +1,37 @@
 namespace libs;
 
+// GameObjectFactory class
 public class GameObjectFactory : IGameObjectFactory
 {
-    public GameObject CreateGameObject(dynamic obj) {
-
-        GameObject newObj = new GameObject();
-        int type = obj.Type;
+    // creates GameObject based on dynamic input
+    public GameObject CreateGameObject(dynamic obj)
+    {
+        GameObject newObj = new GameObject(); // Create a new generic GameObject
+        int type = obj.Type; // Get the type of the object from the dynamic input
 
         switch (type)
         {
-            case (int) GameObjectType.Player:
-                newObj = Player.Instance;
-                newObj.PosX = obj.PosX;
-                newObj.PosY = obj.PosY;
-                newObj.Color = obj.Color;
+            // converts object types
+            case (int)GameObjectType.Player:
+                newObj = Player.Instance; // uses the singleton instance
+                newObj.PosX = obj.PosX;   // sets x position from dynamic object
+                newObj.PosY = obj.PosY;   // sets y position from dynamic object
+                newObj.Color = obj.Color; // sets color from dynamic object
                 break;
-            case (int) GameObjectType.Obstacle:
+            case (int)GameObjectType.Obstacle:
                 newObj = obj.ToObject<Obstacle>();
                 break;
-            case (int) GameObjectType.Box:
+            case (int)GameObjectType.Box:
                 newObj = obj.ToObject<Box>();
                 break;
-            case (int) GameObjectType.Target:
+            case (int)GameObjectType.Target:
                 newObj = obj.ToObject<Target>();
                 break;
-            case (int) GameObjectType.NPC:
+            case (int)GameObjectType.NPC:
                 newObj = obj.ToObject<NPC>();
                 break;
         }
 
-        return newObj;
+        return newObj; // Return the created or converted GameObject
     }
 }
