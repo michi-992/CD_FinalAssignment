@@ -14,6 +14,7 @@ class Program
         Console.CursorVisible = false;
         var engine = GameEngine.Instance;
         var inputHandler = InputHandler.Instance;
+        inputHandler.MainMenuRequested += OnMainMenuRequested;
         var tutorialDialog = new TutorialDialog();
         
         engine.Setup(currLevel);
@@ -53,12 +54,6 @@ class Program
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 inputHandler.Handle(keyInfo);
                 engine.Update();
-
-                if (keyInfo.Key == ConsoleKey.M)
-                {
-                    MainMenuOpen = true;
-                    continue;
-                }
             }
         }
     }
@@ -82,6 +77,11 @@ class Program
 
         Console.Clear();
         Main(null);
+    }
+
+    private static void OnMainMenuRequested(object sender, EventArgs e)
+    {
+        MainMenuOpen = true;
     }
 
     static private void ShowMainMenu(TutorialDialog tutorialDialog)

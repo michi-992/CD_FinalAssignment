@@ -8,6 +8,8 @@ public sealed class InputHandler{
     private DateTime lastInteractionTime = DateTime.MinValue;
     private readonly TimeSpan interactionCooldown = TimeSpan.FromSeconds(5);
 
+    public event EventHandler MainMenuRequested;
+
     public static InputHandler Instance {
         get{
             if(_instance == null)
@@ -55,11 +57,19 @@ public sealed class InputHandler{
                 case ConsoleKey.E:
                     HandleInteraction();
                     break;
+                case ConsoleKey.M:
+                    OnMainMenuRequested();
+                    break;
                 default:
                     break;
             }
         }
         
+    }
+
+    private void OnMainMenuRequested()
+    {
+        MainMenuRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void HandleInteraction()
