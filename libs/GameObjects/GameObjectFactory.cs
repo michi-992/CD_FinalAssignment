@@ -28,7 +28,10 @@ public class GameObjectFactory : IGameObjectFactory
                 newObj = obj.ToObject<Target>();
                 break;
             case (int)GameObjectType.NPC:
-                newObj = obj.ToObject<NPC>();
+                newObj = NPC.Instance; // uses the singleton instance
+                newObj.PosX = obj.PosX;   // sets x position from dynamic object
+                newObj.PosY = obj.PosY;   // sets y position from dynamic object
+                newObj.Color = obj.Color; // sets color from dynamic object
                 break;
         }
 
