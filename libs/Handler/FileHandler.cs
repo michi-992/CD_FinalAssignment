@@ -6,19 +6,20 @@ using Newtonsoft.Json;
 
 public static class FileHandler
 {
+    // Setup JSON for level designs
     private static string filePath;
     private readonly static string envVar = "GAME_SETUP_PATH";
 
 
-    // added second JSON file for saved game
+    // Saved Setup JSON for saving movable objects (player and boxes) and retrieving them, as well as game level
     private static string savedFilePath;
     private readonly static string envVarSavedGame = "GAME_SETUP_PATH_SAVED";
 
-
+    // Dialog Setuap JSON for loading all in-game dialogs (1 npc and dialog per level)
     private static string dialogFilePath;
     private readonly static string envVarDialog = "GAME_DIALOG_SETUP_PATH";
 
-
+    // Tutorial Setup JSON for loading
     private static string tutorialFilePath;
     private readonly static string envVarTutorial = "GAME_TUTORIAL_SETUP_PATH";
 
@@ -27,6 +28,7 @@ public static class FileHandler
         Initialize();
     }
 
+    // method to initialize file paths from environment variables
     private static void Initialize()
     {
         if(Environment.GetEnvironmentVariable(envVar) != null){
@@ -43,6 +45,7 @@ public static class FileHandler
         };
     }
 
+    // method to read JSON file for level designs
     public static dynamic ReadJson()
     {
         if (string.IsNullOrEmpty(filePath))
@@ -66,7 +69,7 @@ public static class FileHandler
         }
     }
 
-    // read saved saved game json file
+    // method to read JSON file for saved game data
     public static dynamic ReadSavedJson()
     {
         if (string.IsNullOrEmpty(savedFilePath))
@@ -90,6 +93,7 @@ public static class FileHandler
         }
     }
 
+    // method to read JSON file for game dialogs
     public static dynamic ReadDialogJson()
     {
         if (string.IsNullOrEmpty(dialogFilePath))
@@ -113,6 +117,7 @@ public static class FileHandler
         }
     }
 
+    // method to read JSON file for tutorial dialog
     public static dynamic ReadTutorialJson()
     {
         if (string.IsNullOrEmpty(tutorialFilePath))
