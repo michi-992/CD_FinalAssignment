@@ -57,69 +57,6 @@ public class GameObject : IGameObject, IMovement
     }
 
 
-Sure, here are comments added to each part of the provided C# code:
-
-csharp
-Copy code
-namespace libs;
-
-// Define a GameObject class implementing IGameObject and IMovement interfaces
-public class GameObject : IGameObject, IMovement
-{
-    // Private fields for character representation, color, and position
-    private char _charRepresentation = '#';
-    private ConsoleColor _color;
-
-    private int _posX;
-    private int _posY;
-    
-    private int _prevPosX;
-    private int _prevPosY;
-
-    // Public property for GameObject type
-    public GameObjectType Type;
-
-    // Default constructor sets initial position and default color
-    public GameObject() {
-        this._posX = 5;
-        this._posY = 5;
-        this._color = ConsoleColor.Gray;
-    }
-
-    // Constructor with parameters for custom position
-    public GameObject(int posX, int posY){
-        this._posX = posX;
-        this._posY = posY;
-    }
-
-    // Constructor with parameters for custom position and color
-    public GameObject(int posX, int posY, ConsoleColor color){
-        this._posX = posX;
-        this._posY = posY;
-        this._color = color;
-    }
-
-    // Property for character representation of the GameObject
-    public char CharRepresentation
-    {
-        get { return _charRepresentation ; }
-        set { _charRepresentation = value; }
-    }
-
-    // Property for color of the GameObject
-    public ConsoleColor Color
-    {
-        get { return _color; }
-        set { _color = value; }
-    }
-
-    // Property for X coordinate of the GameObject's position
-    public int PosX
-    {
-        get { return _posX; }
-        set { _posX = value; }
-    }
-
     // Property for Y coordinate of the GameObject's position
     public int PosY
     {
