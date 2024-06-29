@@ -140,7 +140,8 @@ class Program
 
         Console.Clear();
         Console.WriteLine("HEXOBAN");
-        Console.WriteLine("Congratulations! You have completed the game!");
+        Console.WriteLine("");
+        Console.WriteLine("Congratulations! You have completed the witch trials!");
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey();
         Environment.Exit(0); // exits
