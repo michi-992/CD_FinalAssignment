@@ -56,16 +56,7 @@ public sealed class GameEngine
         currentGameLevel = value;
     }
 
-    private bool resetGame = false; // tracks restart game key press
-
-    // get and set for restartGame bool
-    public bool GetRestartGame() {
-        return resetGame;
-    }
-
-    public void SetRestartGame(bool restart) {
-        resetGame = restart;
-    }
+    
 
     public Dialog? dialog  = null;
 
@@ -213,16 +204,6 @@ public sealed class GameEngine
     public void RemoveGameObject(GameObject gameObject){
         gameObjects.Remove(gameObject);
     }
-
-    public void revertHistory() {
-        map.resetHistory = true;
-    }
-
-    // for removing history once a level was completed 
-    public void removeHistory() {
-        map.clearHistory();
-    }
-
     private void PlaceGameObjects(){
 
         // RENDER THE WALLS
@@ -357,8 +338,4 @@ public sealed class GameEngine
     }
 
 
-    // called with restart game key input (R)
-    public void restartGame() {
-        resetGame = true;
-    }
 }

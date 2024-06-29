@@ -122,4 +122,33 @@ public class Map {
             RepresentationalLayer[gameObject.PosY, gameObject.PosX] = gameObject.CharRepresentation;
         }
     }
+
+    
+    public void resetHistoryMethod() {
+        this.resetHistory = true;
+    }
+
+    // for removing history once a level was completed 
+    public void removeHistory() {
+        this.clearHistory();
+    }
+
+
+    private bool resetGame = false; // tracks restart game key press
+
+    // get and set for restartGame bool
+    public bool GetRestartGame() {
+        return resetGame;
+    }
+
+    public void SetRestartGame(bool restart) {
+        resetGame = restart;
+    }
+
+    
+    // called with restart game key input (R)
+    public void restartGame() {
+        resetGame = true;
+    }
+
 }

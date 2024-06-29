@@ -40,7 +40,7 @@ class Program
                 }
 
                 // Check for restart key press
-                if (engine.GetRestartGame()) {
+                if (engine.GetMap().GetRestartGame()) {
                     restartGame(engine); // restarts game
                     break;
                 }
@@ -71,7 +71,7 @@ class Program
     // proceeds to next level
     static private void nextLevel(GameEngine engine) {
         // remove map history once level completed
-        engine.removeHistory();
+        engine.GetMap().removeHistory();
 
         // end level or increse current level and set it in game engine
         if (currLevel == 2) endGame();
@@ -154,10 +154,10 @@ class Program
         File.WriteAllText("../SavedFile.json", output);
 
         // remove map history, set level to 0, set flag to false
-        engine.removeHistory();
+        engine.GetMap().removeHistory();
         currLevel = 0; // resets current level to first level
         engine.SetCurrentLevel(currLevel);
-        engine.SetRestartGame(false);
+        engine.GetMap().SetRestartGame(false);
 
         Console.Clear();
         Main(null);

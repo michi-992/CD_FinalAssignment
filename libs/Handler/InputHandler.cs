@@ -58,10 +58,10 @@ public sealed class InputHandler{
 
                 // undoing the last step(s) and restarting the game
                 case ConsoleKey.Z:
-                    engine.revertHistory();
+                    engine.GetMap().resetHistoryMethod();
                     break;
                 case ConsoleKey.R:
-                    engine.restartGame();
+                    engine.GetMap().restartGame();
                     break;
 
                 // interaction with NPCs
