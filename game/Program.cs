@@ -29,12 +29,12 @@ class Program
                 ShowMainMenu(tutorialDialog); // displays main menu
             } else
             {
-                DisplayTip(engine.GetTip()); // displays game tip
+                DisplayTip(engine.GetHelperMethods().GetTip()); // displays game tip
 
                 engine.Render();
 
                 // CHECK WIN CONDITION
-                if (engine.allTargetsFilled()) {
+                if (engine.GetHelperMethods().allTargetsFilled()) {
                     nextLevel(engine); // proceed to next level
                     break;
                 }
@@ -46,8 +46,8 @@ class Program
                 }
 
                 // Saves game if NPC saved it
-                if (engine.dialog.currentNode.text == "I saved the game for you!" && !savedByNPC) {
-                    engine.saveGame(); // saves game
+                if (engine.GetDialog().currentNode.text == "I saved the game for you!" && !savedByNPC) {
+                    engine.GetHelperMethods().saveGame(); // saves game
                     savedByNPC = true; // sets flag indicating if game was saved to true
                 }
             

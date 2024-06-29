@@ -3,21 +3,21 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-
 namespace libs;
 
 using System.Security.Cryptography;
 using Newtonsoft.Json;
 
+// Singleton class representing the game engine
 public sealed class GameEngine
 {
     private static GameEngine? _instance;
     private IGameObjectFactory gameObjectFactory;
 
+    // property to get the singleton instance of the GameEngine
     public static GameEngine Instance {
-        get{
-            if(_instance == null)
-            {
+        get {
+            if (_instance == null) {
                 _instance = new GameEngine();
             }
             return _instance;
@@ -25,30 +25,41 @@ public sealed class GameEngine
     }
 
     private GameEngine() {
-        //INIT PROPS HERE IF NEEDED
+        // Initialize properties here if needed
         gameObjectFactory = new GameObjectFactory();
-        
     }
 
+
+    // currently focused game object (if any) and getter
     private GameObject? _focusedObject;
+    public GameObject GetFocusedObject() {
+        return _focusedObject;
+    }
 
+
+    //  game map and getter
     private Map map = new Map();
-
-    private List<GameObject> gameObjects = new List<GameObject>();
-
-
     public Map GetMap() {
         return map;
     }
 
-    public GameObject GetFocusedObject(){
-        return _focusedObject;
+
+    // list of all game objects and getter
+    private List<GameObject> gameObjects = new List<GameObject>();
+    public List<GameObject> GetGameObjects() {
+        return gameObjects;
     }
 
+
+    // helper methods instance and getter
+    private HelperMethods helperMethods = new HelperMethods();
+    public HelperMethods GetHelperMethods() {
+        return helperMethods;
+    }
+
+    // initial and current game level as well as getter and setter for current game level
     private int? initalGameLevel = 0; // initial level - gets changed if there is a saved game
     private int currentGameLevel = 0; // tracks game level and changes once nextLevel is called in Program
-
-    // get and set for current game level int
     public int GetCurrentLevel() {
         return currentGameLevel;
     }
@@ -56,222 +67,159 @@ public sealed class GameEngine
         currentGameLevel = value;
     }
 
-    
 
-    public Dialog? dialog  = null;
+    // dialog for the current level ang getter
+    private static Dialog? dialog  = null;
+    public Dialog? GetDialog() {
+        return dialog;
+    }
 
-    public void Setup(int currLevel = 0){
-        //Added for proper display of game characters
+
+    // setup method to initialize the game
+    public void Setup(int currLevel = 0) {
+        // added for proper display of game characters
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+        // read game data, saved game data, and dialog data from files
         dynamic gameData = FileHandler.ReadJson();
         dynamic gameDataSaved = FileHandler.ReadSavedJson();
         dynamic dialogData = FileHandler.ReadDialogJson();
 
-
         // checks whether there is a currently saved game and whether it is not bigger than the current level
         initalGameLevel = gameDataSaved.currentLevel; 
-        if(initalGameLevel != null && initalGameLevel !> currLevel) SetCurrentLevel(initalGameLevel.Value);
+        if (initalGameLevel != null && initalGameLevel !> currLevel) SetCurrentLevel(initalGameLevel.Value);
         
-        // checks whether SETUP gameObjects or saved game gameObjects should be used
+        // checks whether setup gameObjects or saved game gameObjects should be used
+        // the helper functions overwrites the gameobject properties for movable game objects
         var gameObjectsJSON = gameData[currentGameLevel].gameObjects;
-        if(gameDataSaved.gameObjects.Count > 0 && (initalGameLevel !> currLevel || initalGameLevel == currLevel)) {
-            int currentIndex = 0;
-            for (int i = 0; i < gameObjectsJSON.Count; i++) {
-                if (gameObjectsJSON[i].Type == 0) {
-                    for (int j = 0; j < gameDataSaved.gameObjects.Count; j++) {
-                        if (gameObjectsJSON[i].Type == gameDataSaved.gameObjects[j].Type) {
-                            gameObjectsJSON[i].PosX = gameDataSaved.gameObjects[j].PosX;
-                            gameObjectsJSON[i].PosY = gameDataSaved.gameObjects[j].PosY;
-                            break;
-                        }
-                    }
-                }
-
-                if (gameObjectsJSON[i].Type == 2) {
-                    for (int j = currentIndex; j < gameDataSaved.gameObjects.Count; j++) {
-                        if (gameObjectsJSON[i].Type == gameDataSaved.gameObjects[j].Type) {
-                            gameObjectsJSON[i].PosX = gameDataSaved.gameObjects[j].PosX;
-                            gameObjectsJSON[i].PosY = gameDataSaved.gameObjects[j].PosY;
-                            gameObjectsJSON[i].CharRepresentation = gameDataSaved.gameObjects[j].CharRepresentation;
-                            currentIndex++;
-
-                            break;
-                        } else {
-                            currentIndex++;
-                        }
-                        
-                    }
-                }
-            }
+        if (gameDataSaved.gameObjects.Count > 0 && (initalGameLevel !> currLevel || initalGameLevel == currLevel)) {
+            gameObjectsJSON = helperMethods.UseSavedObjects(gameObjectsJSON, gameDataSaved);
         }
 
+        // initialize the dialog for the current level
         var currDialog = dialogData[currentGameLevel].dialog;
-        createDialog(currDialog);
+        dialog = helperMethods.createDialog(currDialog);
 
-        
+        // initialize the map dimensions
         map.MapWidth = gameData[currentGameLevel].map.width;
         map.MapHeight = gameData[currentGameLevel].map.height;
 
-        
+        // initialize game objects list and add each game object from JSON to the list
         gameObjects = new List<GameObject>();
-
-        foreach (var gameObject in gameObjectsJSON)
-        {
+        foreach (var gameObject in gameObjectsJSON) {
             AddGameObject(CreateGameObject(gameObject));
         }
         
+        // set the focused object to the first player object found
         _focusedObject = gameObjects.OfType<Player>().First();
-
     }
 
-    public void createDialog(dynamic currDialog) {
-        if (currDialog.Count != 0) {
-            DialogNode[] options = new DialogNode[currDialog.Count];
 
-            for (int i = 0; i < currDialog.Count; i++) {
-                options[i] = new DialogNode((string)currDialog[i].text);
-            }
-
-            for (int i = 0; i < currDialog.Count; i++) {
-                if (currDialog[i].responses != null) {
-                    foreach (var response in currDialog[i].responses) {
-                        options[i].AddResponse((string)response.text, options[response.nextNode - 1]);
-                    }
-                }
-            }
-
-            dialog = new Dialog(options[0]);
-        }
-        else {
-           dialog = null;
-        }
-    }
-
+    // render method to display the game state
     public void Render() {
-        
-        //Clean the map
+        // clear the console
         Console.Clear();
 
-
+        // display the current level and a tip
         var currentLevel = GetCurrentLevel() + 1;
         Console.WriteLine("HEXOBAN - Level " + currentLevel);
-        DisplayTip(GetTip());
+        helperMethods.DisplayTip(helperMethods.GetTip());
 
+        // initialize the map
         map.Initialize();
 
+        // place all game objects on the map
         PlaceGameObjects();
 
+        // save the current map state to history
         map.SaveToHistory();
 
-        //Render the map
-        for (int i = 0; i < map.MapHeight; i++)
-        {
-            for (int j = 0; j < map.MapWidth; j++)
-            {
+        // render the map
+        for (int i = 0; i < map.MapHeight; i++) {
+            for (int j = 0; j < map.MapWidth; j++) {
                 DrawObject(map.Get(i, j));
             }
             Console.WriteLine();
         }
     }
 
-    public string GetTip() {
-        Player player = gameObjects.OfType<Player>().FirstOrDefault();
-        if (player != null && player.NextToNPC(map.GetMap())) {
-            return "Press E to interact with NPC";
-        }
-        return string.Empty;
-    }
 
-    static private void DisplayTip(string tip)
-    {
-        Console.SetCursorPosition(0, 1);
-        Console.WriteLine(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(0, 1);
-        Console.WriteLine(tip);
-    }
-    
-    // Method to create GameObject using the factory from clients
-    public GameObject CreateGameObject(dynamic obj)
-    {
+    // method to create a game object using the factory
+    public GameObject CreateGameObject(dynamic obj) {
         return gameObjectFactory.CreateGameObject(obj);
     }
 
-    public void AddGameObject(GameObject gameObject){
+
+    // method to add a game object to the game objects list
+    public void AddGameObject(GameObject gameObject) {
         gameObjects.Add(gameObject);
     }
 
-    public void RemoveGameObject(GameObject gameObject){
+
+    // method to remove a game object from the game objects list
+    public void RemoveGameObject(GameObject gameObject) {
         gameObjects.Remove(gameObject);
     }
-    private void PlaceGameObjects(){
 
-        // RENDER THE WALLS
-        gameObjects.ForEach(delegate(GameObject obj)
-        {
-            if (obj.Type == GameObjectType.Obstacle)
-            {
+
+    // method to place game objects on the map
+    private void PlaceGameObjects() {
+        // RENDER THE OBSTACLES (walls)
+        gameObjects.ForEach(delegate(GameObject obj) {
+            if (obj.Type == GameObjectType.Obstacle) {
                 map.Set(ref obj);
             }
         });
 
         // RENDER THE TARGETS
-        gameObjects.ForEach(delegate(GameObject obj)
-        {
-            if (obj.Type == GameObjectType.Target)
-            {
+        gameObjects.ForEach(delegate(GameObject obj) {
+            if (obj.Type == GameObjectType.Target) {
                 map.Set(ref obj);
             }
         });
 
         // RENDER THE BOXES
-        gameObjects.ForEach(delegate(GameObject obj)
-        {
-            if (obj.Type == GameObjectType.Box)
-            {
+        gameObjects.ForEach(delegate(GameObject obj) {
+            if (obj.Type == GameObjectType.Box) {
                 map.Set(ref obj);
             }
         });
 
-        // RENDER THE NPCS
-        gameObjects.ForEach(delegate(GameObject obj)
-        {
-            if (obj.Type == GameObjectType.NPC)
-            {
+        // RENDER THE NPCs
+        gameObjects.ForEach(delegate(GameObject obj) {
+            if (obj.Type == GameObjectType.NPC) {
                 map.Set(ref obj);
             }
         });
 
         // RENDER THE PLAYER
-        gameObjects.ForEach(delegate(GameObject obj)
-        {
-            if (obj.Type == GameObjectType.Player)
-            {
+        gameObjects.ForEach(delegate(GameObject obj) {
+            if (obj.Type == GameObjectType.Player) {
                 map.Set(ref obj);
                 return;
             }
         });
     }
 
-    private void DrawObject(GameObject gameObject){
-        
+
+    // method to draw a game object on the console
+    private void DrawObject(GameObject gameObject) {
         Console.ResetColor();
 
-        if(gameObject != null)
-        {
+        if (gameObject != null) {
             Console.ForegroundColor = gameObject.Color;
             Console.Write(gameObject.CharRepresentation);
-        }
-        else{
+        } else {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(' ');
         }
     }
 
+
+    // update method to update the game state
     public void Update() {
-        // CHECK COLLISIONS
-        gameObjects.ForEach(delegate(GameObject obj)
-        {
+        // check for collisions
+        gameObjects.ForEach(delegate(GameObject obj) {
             if (obj.Type != GameObjectType.Floor) {
                 if (map.Get(obj.PosY, obj.PosX) is GameObject gameObject && map.Get(obj.PosY, obj.PosX) != obj && map.Get(obj.PosY, obj.PosX).Type != GameObjectType.Floor) {
                     obj.onCollision(gameObject, map.GetMap());
@@ -280,11 +228,12 @@ public sealed class GameEngine
             }
         });
 
+        // check if history needs to be reset
         if (map.resetHistory) {
             map.revertHistory();
 
-            gameObjects.ForEach(delegate(GameObject obj)
-            {
+            // update positions of game objects based on map state
+            gameObjects.ForEach(delegate(GameObject obj) {
                 if (obj is Player) {
                     for (int i = 0; i < map.MapHeight; i++) {
                         for (int j = 0; j < map.MapWidth; j++) {
@@ -295,8 +244,7 @@ public sealed class GameEngine
                             }
                         }
                     }
-                }
-                else if (obj is Box) {
+                } else if (obj is Box) {
                     for (int i = 0; i < map.MapHeight; i++) {
                         for (int j = 0; j < map.MapWidth; j++) {
                             if (map.Get(i, j) == obj) {
@@ -310,32 +258,4 @@ public sealed class GameEngine
             });
         }
     }
-
-    public bool allTargetsFilled() {
-        foreach (GameObject obj in gameObjects) {
-            if (obj is Target) {
-                if (map.Get(obj.PosY, obj.PosX).Type != GameObjectType.Box || map.Get(obj.PosY, obj.PosX).CharRepresentation != obj.CharRepresentation) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public void saveGame() {
-        List<GameObject> gameObjects = new List<GameObject>();
-        // iterats over all gameobjects in last item of map.history and adds them to the list if not Floor
-        for (int i = 0; i < map.MapWidth; i++) {
-            for (int j = 0; j < map.MapHeight; j++) {
-                if(map.history.Last()[j,i].Type == GameObjectType.Player || map.history.Last()[j,i].Type == GameObjectType.Box) gameObjects.Add(map.history.Last()[j,i]);
-            }
-        }
-
-        // saves current level int and gameobjects in a file
-        var gameState = new GameState { currentLevel = currentGameLevel, gameObjects =  gameObjects };
-        string output = JsonConvert.SerializeObject(gameState);
-        File.WriteAllText("../SavedFile.json", output);
-    }
-
-
 }

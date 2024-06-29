@@ -80,7 +80,7 @@ public class GameObject : IGameObject, IMovement
 
     // Method to start a dialog asynchronously
     public void startDialog() {
-        dialog = GameEngine.Instance.dialog; // Get dialog instance from the game engine
+        dialog = GameEngine.Instance.GetDialog(); // Get dialog instance from the game engine
         
         Task dialogTask = Task.Run(() => {
             this.dialog.Start(); // Start the dialog
